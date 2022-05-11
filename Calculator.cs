@@ -4,19 +4,42 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CalculatorSolution
+namespace CalculatorSolution2
 {
-   public class Calculator:ICalculator
+   public class MyCalculator:ICalculator
     {
         public Logger Logger { get; }
-        public Calculator(Logger logger)
+        public MyCalculator(Logger logger)
         {
             Logger = logger;
-        } 
-        public int Sum(int a, int b)
-        {
-            Logger.Event($"Сумма чисел {a} и {b} равна {a+b}.");
-            return (a + b);
         }
+        public decimal Add(decimal a, decimal b)
+        {
+            decimal c = a + b;
+            Logger.Event($" {a} + {b} = {c}.");
+            return (c);
+        }
+
+        public decimal Divide(decimal a, decimal b)
+        {
+            decimal c = a / b;
+            Logger.Event($" {a} / {b} = {c}.");
+            return (c);
+        }
+
+        public decimal Multiply(decimal a, decimal b)
+        {
+            decimal c = a * b;
+            Logger.Event($" {a} * {b} = {c}.");
+            return (c);
+        }
+
+        public decimal Subtract(decimal a, decimal b)
+        {
+            decimal c = a - b;
+            Logger.Event($" {a} - {b} = {c}."); 
+            return (c);
+        }
+        
     }
 }

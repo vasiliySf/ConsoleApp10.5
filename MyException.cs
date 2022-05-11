@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CalculatorSolution
+namespace CalculatorSolution2
 {
   
         public class MyException : Exception

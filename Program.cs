@@ -2,55 +2,100 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CalculatorSolution;
+namespace CalculatorSolution2;
 class Program
 {
-   
+    public delegate decimal Operation(decimal a, decimal b);
     public static void Main(string[] args)
     {
         Logger Logger = new Logger();
 
-        Calculator calculator = new Calculator(Logger);
+        MyCalculator mcalculator = new MyCalculator(Logger);
 
-        string sA, sB;
-        int intA, intB;
-        try
+        Operation operation = mcalculator.Add;
+        operation -= mcalculator.Add;
+
+        char[] signs = new char[] { '+', '-', '/', '*', 'в', 'В' };
+
+        decimal a = 0;
+        decimal b = 0;
+
+        char operate;
+
+        bool check = true;
+        decimal? result;
+
+        Logger.Info("Для работы введите два числа, затем операцию (+,-,*,/), для выхода нажмите 'в' !");
+        do
         {
-            Console.WriteLine("Введите первое целое число");
-            sA = Console.ReadLine();
-
-
-            if (int.TryParse(sA, out intA))
+            try
             {
-                Console.WriteLine("Введите второе целое число");
-                sB = Console.ReadLine();
-                if (int.TryParse(sB, out intB))
+                Logger.Info("Введите первое число: ");
+                a = decimal.Parse(Console.ReadLine());
+
+                Logger.Info("Введите второе число: ");
+                b = decimal.Parse(Console.ReadLine());
+
+                operate = CheckOperate(signs, Logger);
+
+                switch (operate)
                 {
-                    int c = calculator.Sum(intA, intB);
-                    Console.WriteLine();                   
+                    case '+': { operation = mcalculator.Add; break; }
+                    case '-': { operation = mcalculator.Subtract; break; }
+                    case '*': { operation = mcalculator.Multiply; break; }
+                    case '/': { operation = mcalculator.Divide; break; }
+                    case 'в': { check = false; break; }
+                    case 'В': { check = false; break; }
+                }
+
+                if (check)
+                {
+                    result = operation?.Invoke(a, b);                    
                 }
                 else
+                    Logger.Event("Программа завершена!");
+            }
+            catch (Exception ex)
+            { Console.WriteLine(ex.ToString()); }
+        }
+        while (check);
+
+        Console.ReadKey();
+    }
+    public static char CheckOperate(char[] signs, Logger Logger)
+    {
+        char[] input;
+        string? inputstr = string.Empty;
+        bool check = false;
+        int i;
+        char sign = 'в';
+
+        do
+        {
+            Logger.Info("Введите операцию (+,-,*,/), для выхода нажмите 'в': ");
+            inputstr = Console.ReadLine();
+            if (inputstr.Length > 0)
+            {
+                input = inputstr.ToCharArray();
+                sign = input[0];
+                for (i = 0; i < 6; i++)
                 {
-                    Logger.Error("Вы ввели не целое число!");
-                    throw new MyException("Вы ввели не целое число!");
+                    if (signs[i] == sign)
+                        return sign;
+                }
+
+                if (i > 5)
+                {
+                    Logger.Error("Не правильно введена операция, попробуйте еще раз ввести.");
+
                 }
             }
             else
-            {
-                Logger.Error("Вы ввели не целое число!");
-                throw new MyException("Вы ввели не целое число!");
-            }
+                Logger.Error("Операция не может быть пустой.");
         }
-        catch (Exception ex)
-        { Console.WriteLine(ex.ToString()); }
-        finally
-        {
-            Logger.Event("Программа завершилась.");
-        } 
+        while (!check);
+
+        return sign;
     }
-
-   
-
-    
 
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CalculatorSolution
+namespace CalculatorSolution2
 {
     public class Logger : ILogger
     {
@@ -22,6 +22,13 @@ namespace CalculatorSolution
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine(message);
             Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void Info(string message)
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(message);
         }
     }
 }
