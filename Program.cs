@@ -32,13 +32,13 @@ class Program
                 else
                 {
                     Logger.Error("Вы ввели не целое число!");
-                    throw new Exception("Вы ввели не целое число!");
+                    throw new MyException("Вы ввели не целое число!");
                 }
             }
             else
             {
                 Logger.Error("Вы ввели не целое число!");
-                throw new Exception("Вы ввели не целое число!");
+                throw new MyException("Вы ввели не целое число!");
             }
         }
         catch (Exception ex)
