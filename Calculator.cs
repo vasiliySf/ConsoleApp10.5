@@ -21,10 +21,20 @@ namespace CalculatorSolution2
         }
 
         public decimal Divide(decimal a, decimal b)
-        {
-            decimal c = a / b;
-            Logger.Event($" {a} / {b} = {c}.");
-            return (c);
+        {   if (b==0)
+            {
+                Logger.Error($"На ноль делить нельзя!");
+                return (0);
+            }
+                
+            else
+            {
+                decimal c = a / b;
+                Logger.Event($" {a} / {b} = {c}.");
+                return (c);
+            }
+
+            
         }
 
         public decimal Multiply(decimal a, decimal b)
